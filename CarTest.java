@@ -54,19 +54,19 @@ public class CarTest {
         Saab95 saab = new Saab95(Color.red);
         saab.startEngine();
         saab.move();
-        assertEquals(0.1, saab.getCurrentPositionY(), 0.01);
-        assertEquals(0, saab.getCurrentPositionX(), 0.01);
+        assertEquals(0.1, saab.getPositionY(), 0.01);
+        assertEquals(0, saab.getPositionX(), 0.01);
 
         saab.turnRight();
         saab.move();
-        assertEquals(0.1, saab.getCurrentPositionY(), 0.01);
-        assertEquals(0.1, saab.getCurrentPositionX(), 0.01);
+        assertEquals(0.1, saab.getPositionY(), 0.01);
+        assertEquals(0.1, saab.getPositionX(), 0.01);
 
         saab.turnLeft();
         saab.turnLeft();
         saab.move();
-        assertEquals(0.1, saab.getCurrentPositionY(), 0.01);
-        assertEquals(0.0, saab.getCurrentPositionX(), 0.01);
+        assertEquals(0.1, saab.getPositionY(), 0.01);
+        assertEquals(0.0, saab.getPositionX(), 0.01);
     }
 }
 
