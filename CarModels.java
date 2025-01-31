@@ -21,6 +21,7 @@ public abstract class CarModels implements Movable {
         stopEngine();
     }
 
+    @Override
     public void move(){
         switch (direction) {
             case 0 -> currentPositionY+=currentSpeed;
@@ -30,6 +31,7 @@ public abstract class CarModels implements Movable {
         }
     }
 
+    @Override
     public void turnLeft(){
         switch(direction){
             case 0 -> direction =3;
@@ -37,6 +39,7 @@ public abstract class CarModels implements Movable {
         }
     }
 
+    @Override
     public void turnRight(){
         switch(direction){
             case 3 -> direction =0;
