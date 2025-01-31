@@ -11,15 +11,15 @@ public class CarTest {
         Saab95 saab = new Saab95(Color.red);
         assertEquals(0, saab.getCurrentSpeed());
         saab.setTurboOn();
-        assertEquals(1.625, saab.speedFactor(), 0.01);
+        assertEquals(1.625, saab.speedFactor());
         saab.setTurboOff();
-        assertEquals(1.25, saab.speedFactor(), 0.01);
+        assertEquals(1.25, saab.speedFactor());
     }
 
     @Test
     public void testVolvo240SpeedFactor() {
         Volvo240 volvo = new Volvo240(Color.black);
-        assertEquals(1.25, volvo.speedFactor(), 0.01);
+        assertEquals(1.25, volvo.speedFactor());
     }
 
     @Test
@@ -54,19 +54,19 @@ public class CarTest {
         Saab95 saab = new Saab95(Color.red);
         saab.startEngine();
         saab.move();
-        assertEquals(0.1, saab.getPositionY(), 0.01);
-        assertEquals(0, saab.getPositionX(), 0.01);
+        assertEquals(0.1, saab.getPositionY());
+        assertEquals(0, saab.getPositionX());
 
         saab.turnRight();
         saab.move();
-        assertEquals(0.1, saab.getPositionY(), 0.01);
-        assertEquals(0.1, saab.getPositionX(), 0.01);
+        assertEquals(0.1, saab.getPositionY());
+        assertEquals(0.1, saab.getPositionX());
 
         saab.turnLeft();
         saab.turnLeft();
         saab.move();
-        assertEquals(0.1, saab.getPositionY(), 0.01);
-        assertEquals(0.0, saab.getPositionX(), 0.01);
+        assertEquals(0.1, saab.getPositionY());
+        assertEquals(0.0, saab.getPositionX());
     }
 }
 
