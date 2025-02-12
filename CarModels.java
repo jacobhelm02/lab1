@@ -21,6 +21,10 @@ public abstract class CarModels implements Movable {
         stopEngine();
     }
 
+    public String getModelName() {
+        return modelName;
+    }
+
     @Override
     public void move(){
         switch (direction) {
@@ -79,6 +83,14 @@ public abstract class CarModels implements Movable {
         return currentPositionX;
     }
 
+    public void setCurrentPositionX(double positionX) {
+        currentPositionX = positionX;
+    }
+
+    public void setCurrentPositionY(double positionY) {
+        currentPositionY = positionY;
+    }
+
     public double getPositionY(){
         return currentPositionY;
     }
@@ -99,7 +111,7 @@ public abstract class CarModels implements Movable {
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
     }
 
-    // TODO fix this method according to lab pm
+
     public void gas(double amount){
         if (amount <=1 && amount >=0) {
             incrementSpeed(amount);
@@ -108,7 +120,6 @@ public abstract class CarModels implements Movable {
         }
     }
 
-    // TODO fix this method according to lab pm
     public void brake(double amount){
         if (amount <=1 && amount >=0) {
             decrementSpeed(amount);
@@ -116,4 +127,6 @@ public abstract class CarModels implements Movable {
             throw new IllegalArgumentException("Amount should be in [0,1]");
         }
     }
+
+
 }
