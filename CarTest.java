@@ -104,10 +104,10 @@ public class CarTest {
     public void lorryAngleCartransport(){
         CarTransport carTransport = new CarTransport(Color.blue);
         assertEquals(0, carTransport.getLorryAngle());
-        carTransport.raiseLorry(50);
+        carTransport.raiseLorry();
         assertEquals(1,carTransport.getLorryAngle());
 
-        carTransport.lowerLorry(25);
+        carTransport.lowerLorry();
         assertEquals(0, carTransport.getLorryAngle());
     }
 
