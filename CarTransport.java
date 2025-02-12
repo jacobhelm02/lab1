@@ -47,6 +47,14 @@ public class CarTransport extends Truck{
            car.setCurrentPositionY(getPositionY());
         }
     }
+
+    public void raiseLorry() {
+        super.raiseLorry(1);
+    }
+
+    public void lowerLorry() {
+        super.lowerLorry(1);
+    }
 }
 
 

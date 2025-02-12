@@ -115,11 +115,11 @@ public class CarTest {
     public void changeAngleSpeedCartransport() {
         CarTransport carTransport = new CarTransport(Color.cyan);
         carTransport.startEngine();
-        assertThrows(IllegalArgumentException.class, () -> carTransport.raiseLorry(10));
-        assertThrows(IllegalArgumentException.class, () -> carTransport.lowerLorry(10));
+        assertThrows(IllegalArgumentException.class, () -> carTransport.raiseLorry());
+        assertThrows(IllegalArgumentException.class, () -> carTransport.lowerLorry());
 
         carTransport.stopEngine();
-        carTransport.raiseLorry(25);
+        carTransport.raiseLorry();
         assertThrows(IllegalArgumentException.class, () -> carTransport.gas(0.5));
     }
 
@@ -131,7 +131,7 @@ public class CarTest {
         CarTransport carTransport2 = new CarTransport(Color.blue);
         assertThrows(IllegalArgumentException.class, ()-> carTransport.loadCar(carTransport2));
         assertThrows(IllegalArgumentException.class, () -> carTransport.loadCar(volvo240));
-        carTransport.raiseLorry(10);
+        carTransport.raiseLorry();
         assertDoesNotThrow(() -> carTransport.loadCar(volvo240));
 
         saab95.setCurrentPositionX(5);
@@ -144,7 +144,7 @@ public class CarTest {
         CarTransport carTransport = new CarTransport(Color.black);
         Volvo240 volvo240 = new Volvo240(Color.gray);
         Saab95 saab95 = new Saab95(Color.red);
-        carTransport.raiseLorry(10);
+        carTransport.raiseLorry();
         volvo240.startEngine();
         volvo240.move();
         assertNotEquals(carTransport.getPositionY(), volvo240.getPositionY());
@@ -152,7 +152,7 @@ public class CarTest {
         assertEquals(carTransport.getPositionY(), volvo240.getPositionY());
         carTransport.loadCar(saab95);
 
-        carTransport.lowerLorry(10);
+        carTransport.lowerLorry();
         carTransport.startEngine();
         carTransport.move();
         carTransport.turnRight();
@@ -161,7 +161,7 @@ public class CarTest {
         assertEquals(carTransport.getPositionX(), saab95.getPositionX());
 
         carTransport.stopEngine();
-        carTransport.raiseLorry(10);
+        carTransport.raiseLorry();
         assertEquals(saab95, carTransport.unloadCar());
         switch (carTransport.getDirection()) {
             case 0 -> assertEquals(carTransport.getPositionY() -1,saab95.getPositionY());
