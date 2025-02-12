@@ -7,19 +7,20 @@ public class Garage <C extends CarModels>{
 
     public Garage(int maxCars){
         this.maxCars = maxCars;
-        this.cars = new ArrayList<>();
+        this.cars = new ArrayList<>(maxCars);
     }
 
-    public void loadCar(C car){
+    public int loadCar(C car){
         if (cars.size() < maxCars) {
             cars.add(car);
+            return cars.indexOf(car);
         }
         else {
             throw new IllegalStateException("Garage is full.");
         }
     }
 
-    public C unloadCar(C car){
+    public C unloadCar(C car){ //hitta något annat sätt att identifiera specifika bilar, t.ex. ett nyckelelement?
         if (cars.contains(car)) {
             cars.remove(car);
             System.out.println("Unloading " + car.getModelName() + " from garage");
@@ -28,11 +29,7 @@ public class Garage <C extends CarModels>{
         else {throw new IllegalStateException(car + " is not in garage.");}
     }
 
-    public List getGarage() {
-        return cars;
-    }
-
-    public int getSizeGarage() {
+    public int getSize() {
         return cars.size();
     }
 

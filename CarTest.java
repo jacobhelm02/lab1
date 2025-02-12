@@ -74,17 +74,17 @@ public class CarTest {
         Scania scania = new Scania(Color.blue);
         assertEquals(0, scania.getLorryAngle());
         double intialAngle = scania.getLorryAngle();
-        scania.raiseLorry(50);
+        scania.tiltRamp(50);
         double raisedAngle = scania.getLorryAngle();
         assertTrue(intialAngle < raisedAngle);
 
-        scania.lowerLorry(25);
+        scania.untiltRamp(25);
         double loweredAngle = scania.getLorryAngle();
         assertTrue(loweredAngle < raisedAngle);
 
-        scania.raiseLorry(100);
+        scania.tiltRamp(100);
         assertTrue(scania.getLorryAngle() <= 70);
-        scania.lowerLorry(110);
+        scania.untiltRamp(110);
         assertTrue(scania.getLorryAngle() >= 0);
     }
 
@@ -92,34 +92,34 @@ public class CarTest {
     public void changeAngleSpeed() {
         Scania scania = new Scania(Color.magenta);
         scania.startEngine();
-        assertThrows(IllegalArgumentException.class, () -> scania.raiseLorry(10));
-        assertThrows(IllegalArgumentException.class, () -> scania.lowerLorry(10));
+        assertThrows(IllegalArgumentException.class, () -> scania.tiltRamp(10));
+        assertThrows(IllegalArgumentException.class, () -> scania.untiltRamp(10));
 
         scania.brake(1);
-        scania.raiseLorry(25);
+        scania.tiltRamp(25);
         assertThrows(IllegalArgumentException.class, () -> scania.gas(0.5));
     }
 
     @Test
     public void lorryAngleCartransport(){
         CarTransport carTransport = new CarTransport(Color.blue);
-        assertEquals(0, carTransport.getLorryAngle());
-        carTransport.raiseLorry();
-        assertEquals(1,carTransport.getLorryAngle());
+        assertFalse(carTransport.isTilted());
+        carTransport.tiltRamp();
+        assertTrue(carTransport.isTilted());
 
-        carTransport.lowerLorry();
-        assertEquals(0, carTransport.getLorryAngle());
+        carTransport.untiltRamp();
+        assertFalse(carTransport.isTilted());
     }
 
     @Test
     public void changeAngleSpeedCartransport() {
         CarTransport carTransport = new CarTransport(Color.cyan);
         carTransport.startEngine();
-        assertThrows(IllegalArgumentException.class, () -> carTransport.raiseLorry());
-        assertThrows(IllegalArgumentException.class, () -> carTransport.lowerLorry());
+        assertThrows(IllegalStateException.class, carTransport::tiltRamp);
+        assertThrows(IllegalStateException.class, carTransport::untiltRamp);
 
         carTransport.stopEngine();
-        carTransport.raiseLorry();
+        carTransport.tiltRamp();
         assertThrows(IllegalArgumentException.class, () -> carTransport.gas(0.5));
     }
 
@@ -131,7 +131,7 @@ public class CarTest {
         CarTransport carTransport2 = new CarTransport(Color.blue);
         assertThrows(IllegalArgumentException.class, ()-> carTransport.loadCar(carTransport2));
         assertThrows(IllegalArgumentException.class, () -> carTransport.loadCar(volvo240));
-        carTransport.raiseLorry();
+        carTransport.tiltRamp();
         assertDoesNotThrow(() -> carTransport.loadCar(volvo240));
 
         saab95.setCurrentPositionX(5);
@@ -144,7 +144,7 @@ public class CarTest {
         CarTransport carTransport = new CarTransport(Color.black);
         Volvo240 volvo240 = new Volvo240(Color.gray);
         Saab95 saab95 = new Saab95(Color.red);
-        carTransport.raiseLorry();
+        carTransport.tiltRamp();
         volvo240.startEngine();
         volvo240.move();
         assertNotEquals(carTransport.getPositionY(), volvo240.getPositionY());
@@ -152,7 +152,7 @@ public class CarTest {
         assertEquals(carTransport.getPositionY(), volvo240.getPositionY());
         carTransport.loadCar(saab95);
 
-        carTransport.lowerLorry();
+        carTransport.untiltRamp();
         carTransport.startEngine();
         carTransport.move();
         carTransport.turnRight();
@@ -161,7 +161,7 @@ public class CarTest {
         assertEquals(carTransport.getPositionX(), saab95.getPositionX());
 
         carTransport.stopEngine();
-        carTransport.raiseLorry();
+        carTransport.tiltRamp();
         assertEquals(saab95, carTransport.unloadCar());
         switch (carTransport.getDirection()) {
             case 0 -> assertEquals(carTransport.getPositionY() -1,saab95.getPositionY());
@@ -181,9 +181,9 @@ public class CarTest {
         garage.loadCar(saab);
         garage.loadCar(saab2);
         assertThrows(IllegalStateException.class, () -> garage.loadCar(saab3));
-        assertEquals(2, garage.getSizeGarage());
+        assertEquals(2, garage.getSize());
         garage.unloadCar(saab2);
-        assertEquals(1, garage.getSizeGarage());
+        assertEquals(1, garage.getSize());
         assertThrows(IllegalStateException.class, () -> garage.unloadCar(saab3));
 
         Garage<CarModels> garageAll = new Garage<>(3);
@@ -192,9 +192,7 @@ public class CarTest {
         garageAll.loadCar(scania);
         garageAll.loadCar(carTransport);
         garageAll.loadCar(volvo);
-        assertEquals(3, garageAll.getSizeGarage());
-
-        System.out.println(garageAll.getGarage());
+        assertEquals(3, garageAll.getSize());
     }
 }
 

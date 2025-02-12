@@ -1,45 +1,39 @@
 import java.awt.*;
 
 public class Truck extends CarModels{
-    private int lorryAngle;
-    private int maxAngle;
+    private boolean tilted;
 
-    public Truck(Color color, String modelName, int maxAngle) {
+    public Truck(Color color, String modelName) {
         super(2, 100, color, modelName);
-        this.lorryAngle = 0;
-        this.maxAngle = maxAngle;
+        this.tilted = false;
     }
 
-
-    public int getLorryAngle(){
-        return lorryAngle;
+    public boolean isTilted(){
+        return tilted;
     }
 
-    public void raiseLorry(int amount){
-        if (amount >=0 && getCurrentSpeed() == 0) {
-            lorryAngle = Math.min((lorryAngle + amount), maxAngle);
-        } else {
-            throw new IllegalArgumentException("The vehicle is moving or amount is smaller than 0");
+    public void tiltRamp() {
+        if (!isDriving()) {
+            tilted = true;
         }
-
+        else {throw new IllegalStateException("Truck is moving");}
     }
 
-    public void lowerLorry(int amount){
-        if (amount >=0 && getCurrentSpeed() == 0) {
-            lorryAngle = Math.max((lorryAngle - amount), 0);
-        } else {
-            throw new IllegalArgumentException("The vehicle is moving or amount is smaller than 0");
+    public void untiltRamp() {
+        if (!isDriving()) {
+            tilted = false;
         }
+        else {throw new IllegalStateException("Truck is moving");}
     }
+
 
     @Override
     public void gas(double amount) {
-        if (lorryAngle == 0){
+        if (! isTilted()){
             super.gas(amount);
         }
-        else {throw new IllegalArgumentException("The lorry is raised");}
+        else {throw new IllegalArgumentException("The lorry is tilted");}
     }
-
 
     @Override
     protected double speedFactor() {

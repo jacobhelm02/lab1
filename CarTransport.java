@@ -5,27 +5,43 @@ public class CarTransport extends Truck{
     private Stack<CarModels> loadedCars;
 
     public CarTransport(Color color){
-        super(color, "CarTransport", 1);
+        super(color, "CarTransport");
         this.loadedCars = new Stack<>();
     }
-    // 0 - ramp uppe, går ej skicka på bilar
-    // 1 - ramp nere, går skicka på bilar
 
-    public void loadCar(CarModels car) {
+    // tilted - true or false
+
+    private boolean isInRange(CarModels car) {
         double xDistance = getPositionX() - car.getPositionX();
         double yDistance = getPositionY() - car.getPositionY();
 
-        if (getLorryAngle() == 1 && Math.abs(xDistance) <= 1 && Math.abs(yDistance) <= 1 && loadedCars.size()<8
-            && !(car instanceof CarTransport)) {
+        boolean inRange = Math.abs(xDistance) <= 1 && Math.abs(yDistance) <= 1;
+        return inRange;
+    }
+
+    private boolean maxSizeReached() {
+        return loadedCars.size() >= 8;
+    }
+
+
+    public boolean isLoadable(CarModels car) {
+        return isTilted() && isInRange(car) && !maxSizeReached()
+                && !(car instanceof CarTransport);
+    }
+
+    public void loadCar(CarModels car) {
+
+        if (isLoadable(car)) {
             loadedCars.push(car);
             car.setCurrentPositionX(getPositionX());
             car.setCurrentPositionY(getPositionY());
         }
-        else {throw new IllegalArgumentException("if-statement not ok!");}
+        else {throw new IllegalArgumentException("Not loadable!");}
     }
 
+
     public CarModels unloadCar() {
-        if (getLorryAngle() == 1 && ! loadedCars.isEmpty()){
+        if (isTilted() && !loadedCars.isEmpty()){
             CarModels car = loadedCars.pop();
             switch (getDirection()) {
                 case 0 -> car.setCurrentPositionY((getPositionY() - 1));
@@ -35,8 +51,7 @@ public class CarTransport extends Truck{
             }
             return car;
         }
-        else {throw new IllegalArgumentException("Angle not ok!");}
-
+        else {throw new IllegalArgumentException("Angle not ok or no cars loaded!");}
     }
 
     @Override
@@ -46,14 +61,6 @@ public class CarTransport extends Truck{
            car.setCurrentPositionX(getPositionX());
            car.setCurrentPositionY(getPositionY());
         }
-    }
-
-    public void raiseLorry() {
-        super.raiseLorry(1);
-    }
-
-    public void lowerLorry() {
-        super.lowerLorry(1);
     }
 }
 

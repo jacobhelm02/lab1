@@ -79,15 +79,19 @@ public abstract class CarModels implements Movable {
 	    currentSpeed = 0;
     }
 
+    public boolean isDriving() {
+        return currentSpeed > 0;
+    }
+
     public double getPositionX(){
         return currentPositionX;
     }
 
-    public void setCurrentPositionX(double positionX) {
+    protected void setCurrentPositionX(double positionX) {
         currentPositionX = positionX;
     }
 
-    public void setCurrentPositionY(double positionY) {
+    protected void setCurrentPositionY(double positionY) {
         currentPositionY = positionY;
     }
 
