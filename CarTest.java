@@ -193,6 +193,8 @@ public class CarTest {
         garageAll.loadCar(carTransport);
         garageAll.loadCar(volvo);
         assertEquals(3, garageAll.getSizeGarage());
+
+        System.out.println(garageAll.getGarage());
     }
 }
 

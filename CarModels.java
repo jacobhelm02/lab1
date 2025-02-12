@@ -127,6 +127,4 @@ public abstract class CarModels implements Movable {
             throw new IllegalArgumentException("Amount should be in [0,1]");
         }
     }
-
-
 }

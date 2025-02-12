@@ -9,7 +9,7 @@ public class CarTransport extends Truck{
         this.loadedCars = new Stack<>();
     }
     // 0 - ramp uppe, går ej skicka på bilar
-    // 1 - ramp nere, går ej skicka på bilar
+    // 1 - ramp nere, går skicka på bilar
 
     public void loadCar(CarModels car) {
         double xDistance = getPositionX() - car.getPositionX();
